@@ -1,0 +1,53 @@
+
+
+f = function(arr, len =10)
+ {
+ min = min(arr)
+ max = max(arr)
+
+ interval = (max - min)/len
+ intervals = c()
+ orderIntervals = c()
+ x = c()
+ y = c()
+
+ a = arr[order(arr)]
+ temp = 1
+ count = 0
+ i = 1
+
+print(a)
+ 
+ while(min <= max)
+ {
+ min = min+interval
+
+
+ while((i != length(a)+1) && (min >= a[i]))
+ {
+
+ count = count+1
+ i = i+1
+ }
+ if(temp <= len)
+ {
+ x <- append(x, (interval / 2) + min)
+ intervals <- append(intervals, count)
+ y <- append(y, intervals[temp]/len)
+ count = 0
+ orderIntervals <- append(orderIntervals, temp)
+ temp = temp+1
+ }
+ }
+ 
+ print(interval)
+ print(x)
+ print(y)
+ plot(x, y, type="n", main="График функции")
+ lines(x,y, col="blue")
+ abline(h=0)#gorizontal
+ abline(v=0)#vertical
+}
+
+проверка
+f(rnorm(5000, mean = 5.5, sd = 1.5))
