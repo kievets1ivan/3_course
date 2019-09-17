@@ -1,0 +1,69 @@
+gauss = function(a, b, n)
+{
+for(k in 1:(n-1))
+{
+	for(j in (k+1):n)
+		{a[k,j] = a[k,j]/a[k,k]}
+	b[k] = b[k]/a[k,k]
+	for(i in (k+1):n)
+	{
+		for(j in (k+1):n)
+			{a[i, j] = a[i, j] - a[i,k]*a[k,j]}
+		b[i] = b[i] - a[i, k]*b[k]
+	}
+	}
+	b[n] = b[n]/ a[n,n]
+	for(k in (n-1):1)
+	{
+		for(j in (k+1):n)
+			{b[k] = b[k] - a[k,j] * b[j]}
+	}
+
+	return(b)
+
+
+}
+
+a = cbind(c(5, 6, 10), c(1,18,20), c(2,6,40))
+b = c(10,54,160)
+n = 3
+
+a= cbind(c(5.19,0.86,0.63,0.27), c(0.17,7.49,0.42,0.65), c(0.32,0.75,8.13,0.28), c(0.57,0.96,0.52,6.99))
+b = c(-10.23,11.25,11.33,9.56)
+n = 4
+
+x = gauss(a,b,n)
+
+---------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+yakobi = function(a, b, n, eps){
+tempMatrix = matrix(nrow = n, ncol= n)
+tempVec = c(1:n)
+ for(i in 1:n){
+  for(j in 1:n){
+   tempMatrix[i, j] =  -a[i, j]/a[i, i]
+  }
+  tempVec[i] = b[i]/a[i, i]
+  tempMatrix[i, i] = 0
+ }
+ if(norm(tempMatrix) < 1){
+  x0 = tempVec
+  repeat{
+  x = tempMatrix%*%x0 + tempVec
+  if( norm(x-x0) <= eps )
+  break
+  x0 = x
+  }
+  return(x)
+ }
+} 
+
+a= cbind(c(5.19,0.86,0.63,0.27), c(0.17,7.49,0.42,0.65), c(0.32,0.75,8.13,0.28), c(0.57,0.96,0.52,6.99))
+b = c(-10.23,11.25,11.33,9.56)
+n= 4
+eps = 0.000001
+
+x = yakobi(a,b,n,eps)
